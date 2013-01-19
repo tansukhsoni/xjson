@@ -22,15 +22,8 @@ public class JSONTokenizerTest extends TestCase {
     {
         return new TestSuite( JSONTokenizerTest.class );
     }
-    
-    public void testApp(){
-    	tokenizerTest1();
-    	tokenizerTest2();
-    	tokenizerTest3();
-    	tokenizerTest4();
-    }
 
-    public void tokenizerTest1(){
+    public void testTokenizer1(){
     	JSONTokenizer tokenizer = new JSONTokenizer("{\"key\":\"value\"}");
     	assertEquals(JSONTokenizer.Token.START_BRACE, tokenizer.currentToken());
     	assertEquals(JSONTokenizer.Token.COLON, tokenizer.nextToken());
@@ -42,7 +35,7 @@ public class JSONTokenizerTest extends TestCase {
     	assertEquals(JSONTokenizer.Token.EOF, tokenizer.nextToken());
     }
     
-    public void tokenizerTest2(){
+    public void testTokenizer2(){
     	JSONTokenizer tokenizer = new JSONTokenizer("{}");
     	assertEquals(JSONTokenizer.Token.START_BRACE, tokenizer.currentToken());
     	assertEquals(JSONTokenizer.Token.END_BRACE, tokenizer.nextToken());
@@ -51,7 +44,7 @@ public class JSONTokenizerTest extends TestCase {
     	assertEquals(JSONTokenizer.Token.EOF, tokenizer.nextToken());
     }
     
-    public void tokenizerTest3(){
+    public void testTokenizer3(){
     	JSONTokenizer tokenizer = new JSONTokenizer("[\"key1\":\"value1\",\"key2\":\"value2\"]");
     	assertEquals(JSONTokenizer.Token.START_BRACKET, tokenizer.currentToken());
     	assertEquals(JSONTokenizer.Token.COLON, tokenizer.nextToken());
@@ -69,7 +62,7 @@ public class JSONTokenizerTest extends TestCase {
     	assertEquals(JSONTokenizer.Token.EOF, tokenizer.nextToken());
     }
     
-    public void tokenizerTest4(){
+    public void testTokenizer4(){
     	JSONTokenizer tokenizer = new JSONTokenizer("[]");
     	assertEquals(JSONTokenizer.Token.START_BRACKET, tokenizer.currentToken());
     	assertEquals(JSONTokenizer.Token.END_BRACKET, tokenizer.nextToken());
