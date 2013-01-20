@@ -1,6 +1,7 @@
 package com.jsonutils.xjson;
 
 import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,7 +27,7 @@ public class JSONObjectTest extends TestCase{
     
     public void testJSONObject1(){
     	try{
-    		JSONObject jsonObject = new JSONObject("{\"Name\":\"Tom\", \"City\":\"NY\", \"Age\":\"25\"}");
+    		JSONObject jsonObject = new JSONObject("{\"Name\":\"Tom\",\"City\":\"NY\",\"Age\":\"25\"}");
     		List<String> keys = jsonObject.getKeys();
     		assertEquals(keys.get(0),"Name");
     		assertEquals(keys.get(1),"City");
@@ -41,6 +42,7 @@ public class JSONObjectTest extends TestCase{
     		assertEquals(jsonObject.contains("Age"), true);
     		
     		assertEquals(jsonObject.toXML(), "<Name>Tom</Name><City>NY</City><Age>25</Age>");
+    		
     		
     	}
     	catch(JSONException ex){
