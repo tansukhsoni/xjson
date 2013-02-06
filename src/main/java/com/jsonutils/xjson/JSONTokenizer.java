@@ -168,6 +168,8 @@ public class JSONTokenizer {
 			//	return "";
 				
 	//	}
-		return jsonString.substring(begIndex, endIndex);
+		String returnString = jsonString.substring(begIndex, endIndex);
+		returnString = returnString.trim();
+		return returnString;
 	}
 }
