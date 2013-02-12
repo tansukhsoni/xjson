@@ -23,5 +23,15 @@ public class test{
 		System.out.println(newJA.getJSONArray(4));		
 		System.out.println(toX);
 		
+		XMLNode node = new XMLNode();
+		node.setNodeName("a");
+		node.setTextValue("tansukh");
+		node.addAttribute("age", "25");
+		XMLNode child = new XMLNode();
+		child.setNodeName("b");
+		child.setTextValue("Chitresh");
+		node.addChild(child);
+		System.out.println(node.toString());
+		
 	}
 }

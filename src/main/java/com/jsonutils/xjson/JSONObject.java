@@ -278,7 +278,10 @@ public class JSONObject {
 	public String toXML(String attrKey , String textKey) throws JSONException {
 		try{
 		String XMLString = "";
+		//List<XMLNode> nodes=new ArrayList<XMLNode>();
+		int nodeIndex=0;
 		for (String key : keyList) {
+			//nodes.get(nodeIndex).setNodeName(key);
 			String textValue="";
 			String attrString="";
 			String childString="";
@@ -296,6 +299,7 @@ public class JSONObject {
 						JSONObject tempJSONObject2 = tempJSONObject.getJSONObject(externalKey);
 						for (String internalKey : tempJSONObject2.keyList )
 						{
+							//nodes.get(nodeIndex).addAttribute(internalKey, tempJSONObject2.getString(internalKey));
 							attrString= attrString.concat(" ");
 							attrString= attrString.concat(internalKey);
 							attrString= attrString.concat("=");
@@ -310,6 +314,7 @@ public class JSONObject {
 					else if (externalKey.equals(textKey))
 					{
 						textValue= tempJSONObject.getString(externalKey);
+						//nodes.get(nodeIndex).setTextValue(textValue);
 					}
 					else
 					{
@@ -319,6 +324,8 @@ public class JSONObject {
 						childString= childString.concat(tempJSONObject.getString(externalKey));
 						childString= childString.concat("</");
 						childString= childString.concat(externalKey + ">");
+						//XMLNode childNode = new XMLNode(childString);
+						//nodes.get(nodeIndex).addChild(childNode);
 					}
 					
 				}
@@ -329,10 +336,16 @@ public class JSONObject {
 			{
 				JSONArray jsonArr = this.getJSONArray(key);
 				childString= jsonArr.toXML(attrKey, textKey);
+				//XMLNode childNode= new XMLNode(childString);
+				//nodes.get(nodeIndex).addChild(childNode);
 				
 			}
 			else
+			{
 				textValue= this.getString(key);
+				//nodes.get(nodeIndex).setTextValue(textValue);
+			}
+				
 			
 			XMLString= XMLString.concat(attrString);
 			XMLString= XMLString.concat(">");
@@ -340,7 +353,7 @@ public class JSONObject {
 			XMLString= XMLString.concat(childString);
 			XMLString= XMLString.concat("</");
 			XMLString= XMLString.concat(key + ">" );
-			
+			nodeIndex++;
 		}
 		
 		return XMLString;
