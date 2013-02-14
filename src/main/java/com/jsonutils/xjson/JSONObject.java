@@ -364,6 +364,16 @@ public class JSONObject {
 		}
 	}
 	
+	/**
+	 * Converts the JSONObject to XML representation
+	 * @param attrKey The key in JSONObject which corresponds to XML attributes
+	 * @param textKey The in JSONObject which corresponds to text content of the xml node
+	 * @return Corresponding XML Node
+	 */
+	public List<XMLNode> toXMLNodeList(String attrKey, String textKey){
+		List<XMLNode> xnodeList = null;
+		return xnodeList;
+	}
 	
 	/**
 	 * Converts the JSONObject to a String

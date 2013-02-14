@@ -1,6 +1,7 @@
 package com.jsonutils.xjson;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.management.ObjectName;
 
@@ -227,6 +228,17 @@ public class JSONArray {
 		
 		
 		return XMLString;
+	}
+	
+	/**
+	 * Returns the corresponding XMLNode list representation of the JSONArray
+	 * @param attrKey The JSON key which corresponds to XML attributes
+	 * @param textKey The JSON key which corresponds to XML text content
+	 * @return Corresponding XMLNode list representation
+	 */
+	public List<XMLNode> toXMLNodeList(String attrKey, String textKey){
+		List<XMLNode> xnodeList = null;
+		return xnodeList;
 	}
 	
 	/**
