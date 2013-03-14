@@ -47,13 +47,13 @@ public class JSONObjectTest extends TestCase{
     		assertEquals(xnodeList.get(1).getNodeName(), "City");
     		assertEquals(xnodeList.get(2).getNodeName(), "Age");
     		
-    		assertEquals(xnodeList.get(0).getChildList().size(), 1);
-    		assertEquals(xnodeList.get(1).getChildList().size(), 1);
-    		assertEquals(xnodeList.get(2).getChildList().size(), 1);
+    		assertEquals(xnodeList.get(0).getChildList().size(), 0);
+    		assertEquals(xnodeList.get(1).getChildList().size(), 0);
+    		assertEquals(xnodeList.get(2).getChildList().size(), 0);
     		
-    		assertEquals(xnodeList.get(0).getChildList().get(0).getNodeName(), "Tom");
-    		assertEquals(xnodeList.get(1).getChildList().get(0).getNodeName(), "NY");
-    		assertEquals(xnodeList.get(2).getChildList().get(0).getNodeName(), "25");
+    		assertEquals(xnodeList.get(0).getTextValue(), "Tom");
+    		assertEquals(xnodeList.get(1).getTextValue(), "NY");
+    		assertEquals(xnodeList.get(2).getTextValue(), "25");
     		
     	}
     	catch(JSONException ex){
@@ -95,11 +95,11 @@ public class JSONObjectTest extends TestCase{
     		assertEquals(xnodeList.get(1).getChildList().size(), 2);
     		
     		assertEquals(xnodeList.get(0).getChildList().get(0).getNodeName(), "Firstname");
-    		assertEquals(xnodeList.get(0).getChildList().get(0).getChildList().size(), 1);
-    		assertEquals(xnodeList.get(0).getChildList().get(0).getChildList().get(0).getNodeName(), "John");
+    		assertEquals(xnodeList.get(0).getChildList().get(0).getChildList().size(), 0);
+    		assertEquals(xnodeList.get(0).getChildList().get(0).getTextValue(), "John");
     		assertEquals(xnodeList.get(0).getChildList().get(1).getNodeName(), "Lastname");
-    		assertEquals(xnodeList.get(0).getChildList().get(1).getChildList().size(), 1);
-    		assertEquals(xnodeList.get(0).getChildList().get(1).getChildList().get(0).getNodeName(), "Miller");
+    		assertEquals(xnodeList.get(0).getChildList().get(1).getChildList().size(), 0);
+    		assertEquals(xnodeList.get(0).getChildList().get(1).getTextValue(), "Miller");
     		
     		//TODO: Add more test cases
     		

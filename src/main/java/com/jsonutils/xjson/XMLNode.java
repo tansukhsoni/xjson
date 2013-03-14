@@ -45,9 +45,9 @@ public class XMLNode{
 	
 	public Map<String,String> getAttrList() throws JSONException
 	{
-		if (this.attrMap.isEmpty())
+		/*if (this.attrMap.isEmpty())
 			throw new JSONException("Node with no key-value attribute pair");
-		else
+		else*/
 			return attrMap;
 		
 	}
@@ -62,9 +62,9 @@ public class XMLNode{
 	
 	public List<XMLNode> getChildList() throws JSONException
 	{
-		if (this.childList.isEmpty())
+		/*if (this.childList.isEmpty())
 			throw new JSONException("this node has no child attribute");
-		else
+		else*/
 			return childList;
 		
 		
@@ -89,6 +89,14 @@ public class XMLNode{
 	{
 		this.removeChild(child);
 		this.childList.add(child);
+	}
+	
+	public void addChildList(List<XMLNode> childList)
+	{
+		for (XMLNode child: childList)
+		{
+			this.addChild(child);
+		}
 	}
 	
 	public boolean removeChild(XMLNode child)

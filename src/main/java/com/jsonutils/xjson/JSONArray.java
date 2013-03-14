@@ -235,9 +235,38 @@ public class JSONArray {
 	 * @param attrKey The JSON key which corresponds to XML attributes
 	 * @param textKey The JSON key which corresponds to XML text content
 	 * @return Corresponding XMLNode list representation
+	 * @throws JSONException 
 	 */
-	public List<XMLNode> toXMLNodeList(String attrKey, String textKey){
-		List<XMLNode> xnodeList = null;
+	public List<XMLNode> toXMLNodeList(String attrKey, String textKey) throws JSONException{
+		List<XMLNode> xnodeList = new ArrayList<XMLNode>();
+		for (int index=0; index<this.jsonArrayItems.size(); index++)
+		{
+			String className = this.jsonArrayItems.get(index).getClass().getCanonicalName();
+			if (className == "com.jsonutils.xjson.JSONObject")
+			{
+				JSONObject jo = this.getJSONObject(index);
+				List<XMLNode> joList = jo.toXMLNodeList(attrKey, textKey);
+				XMLNode xnode = new XMLNode();
+				xnode.addChildList(joList);
+				xnodeList.add(xnode);
+			}
+			else if (className == "com.jsonutils.xjson.JSONArray")
+			{
+				JSONArray ja = this.getJSONArray(index);
+				List<XMLNode> jaList = ja.toXMLNodeList(attrKey, textKey);
+				XMLNode xnode = new XMLNode();
+				xnode.addChildList(jaList);
+				xnodeList.add(xnode);
+			}
+			else
+			{   
+				XMLNode node = new XMLNode();
+				node.setNodeName(this.getString(index));
+				xnodeList.add(node);
+				
+			}
+				
+		}
 		return xnodeList;
 	}
 	

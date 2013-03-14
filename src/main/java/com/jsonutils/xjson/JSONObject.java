@@ -100,7 +100,7 @@ public class JSONObject {
 								flag++;								
 							}
 								
-							else if (jsonTokenizer.currentToken() == Token.END_BRACE )
+							else if (jsonTokenizer.currentToken() == Token.END_BRACKET )
 							{
 								tempStr=tempStr.concat("]");
 								flag--;
@@ -278,18 +278,13 @@ public class JSONObject {
 	public String toXML(String attrKey , String textKey) throws JSONException {
 		try{
 		String XMLString = "";
-		List<XMLNode> nodes=new ArrayList<XMLNode>();
-		
 		for (String key : keyList) {
 			
-			XMLNode node = new XMLNode();
-			node.setNodeName(key);
 			String textValue="";
 			String attrString="";
 			String childString="";
 			XMLString = XMLString.concat("<");
 			XMLString = XMLString.concat(key);
-			//String temp = this.getString(key);
 			String className = jsonObjectItems.get(key).getClass().getCanonicalName();
 			if (className=="com.jsonutils.xjson.JSONObject")
 			{
@@ -301,7 +296,6 @@ public class JSONObject {
 						JSONObject tempJSONObject2 = tempJSONObject.getJSONObject(externalKey);
 						for (String internalKey : tempJSONObject2.keyList )
 						{
-							node.addAttribute(internalKey, tempJSONObject2.getString(internalKey));
 							attrString= attrString.concat(" ");
 							attrString= attrString.concat(internalKey);
 							attrString= attrString.concat("=");
@@ -316,7 +310,6 @@ public class JSONObject {
 					else if (externalKey.equals(textKey))
 					{
 						textValue= tempJSONObject.getString(externalKey);
-						node.setTextValue(textValue);
 					}
 					else
 					{
@@ -326,8 +319,6 @@ public class JSONObject {
 						childString= childString.concat(tempJSONObject.getString(externalKey));
 						childString= childString.concat("</");
 						childString= childString.concat(externalKey + ">");
-						XMLNode childNode = new XMLNode(childString);
-						node.addChild(childNode);
 					}
 					
 				}
@@ -337,15 +328,12 @@ public class JSONObject {
 			else if (className=="com.jsonutils.xjson.JSONArray")
 			{
 				JSONArray jsonArr = this.getJSONArray(key);
-				childString= jsonArr.toXML(attrKey, textKey);
-				XMLNode childNode= new XMLNode(childString);
-				node.addChild(childNode);
+				textValue= jsonArr.toXML(attrKey, textKey);
 				
 			}
 			else
 			{
 				textValue= this.getString(key);
-				node.setTextValue(textValue);
 			}
 				
 			
@@ -355,7 +343,6 @@ public class JSONObject {
 			XMLString= XMLString.concat(childString);
 			XMLString= XMLString.concat("</");
 			XMLString= XMLString.concat(key + ">" );
-			nodes.add(node);
 			
 		}
 		
@@ -372,9 +359,69 @@ public class JSONObject {
 	 * @param attrKey The key in JSONObject which corresponds to XML attributes
 	 * @param textKey The in JSONObject which corresponds to text content of the xml node
 	 * @return Corresponding XML Node
+	 * @throws JSONException 
 	 */
-	public List<XMLNode> toXMLNodeList(String attrKey, String textKey){
-		List<XMLNode> xnodeList = null;
+	public List<XMLNode> toXMLNodeList(String attrKey, String textKey) throws JSONException{
+		List<XMLNode> xnodeList=new ArrayList<XMLNode>();
+		for (String key: this.keyList)
+		{
+			XMLNode node = new XMLNode();
+			node.setNodeName(key);
+			String className = jsonObjectItems.get(key).getClass().getCanonicalName();
+			if (className == "com.jsonutils.xjson.JSONObject")
+			{
+				JSONObject tempJSONObject = this.getJSONObject(key);
+				for (String externalKey : tempJSONObject.keyList)
+				{
+					if (externalKey.equals(attrKey))
+					{
+						JSONObject tempJSONObject2 = tempJSONObject.getJSONObject(externalKey);
+						for (String internalKey : tempJSONObject2.keyList )
+						{
+							node.addAttribute(internalKey, tempJSONObject2.getString(internalKey));
+						}
+	
+					}
+					else if (externalKey.equals(textKey))
+					{
+						node.setTextValue(tempJSONObject.getString(externalKey));
+					}
+					else
+					{   
+						XMLNode xnode = new XMLNode();
+					    xnode.setNodeName(externalKey);
+					    String className1 = tempJSONObject.jsonObjectItems.get(externalKey).getClass().getCanonicalName();
+					    if (className1 == "com.jsonutils.xjson.JSONObject")
+					    {
+					    	xnode.setTextValue(tempJSONObject.getJSONObject(externalKey).toXML(attrKey, textKey));
+					    }
+					    else if (className1 == "com.jsonutils.xjson.JSONArray")
+					    {
+					    	xnode.setTextValue(tempJSONObject.getJSONArray(externalKey).toXML(attrKey, textKey));
+					    }
+					    else
+					    	xnode.setTextValue(tempJSONObject.getString(externalKey));
+					    node.addChild(xnode);
+					}
+					
+				}
+				
+			
+			}
+			else if (className == "com.jsonutils.xjson.JSONArray")
+			{
+				JSONArray ja = this.getJSONArray(key);
+				List<XMLNode> nodeList= ja.toXMLNodeList(attrKey, textKey);
+				node.addChildList(nodeList);
+			}
+			else
+			{
+				node.setTextValue(this.getString(key));
+			}
+			
+			xnodeList.add(node);
+			
+		}
 		return xnodeList;
 	}
 	
